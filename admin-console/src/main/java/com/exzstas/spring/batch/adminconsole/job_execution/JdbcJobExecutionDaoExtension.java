@@ -1,4 +1,4 @@
-package com.exzstas.spring.batch.adminconsole.batch_execution;
+package com.exzstas.spring.batch.adminconsole.job_execution;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.BatchStatus;
@@ -13,12 +13,24 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @Slf4j
 @Component
 public class JdbcJobExecutionDaoExtension extends JdbcJobExecutionDao {
 
     private JdbcOperations jdbcTemplate;
+
+    private static final String GET_EXECUTIONS = "SELECT JOB_EXECUTION_ID, START_TIME, END_TIME, STATUS, EXIT_CODE," +
+            " EXIT_MESSAGE, CREATE_TIME, LAST_UPDATED, %PREFIX%JOB_EXECUTION.VERSION, JOB_CONFIGURATION_LOCATION" +
+            " from %PREFIX%JOB_EXECUTION" +
+            " join batch_job_instance on %PREFIX%JOB_EXECUTION.job_instance_id = batch_job_instance.job_instance_id " +
+            " where batch_job_instance.job_name = ?";
+
+    public List<JobExecution> getJobExecutionsByJobName(String jobName) {
+        return jdbcTemplate.query(getQuery(GET_EXECUTIONS),
+                new JobExecutionRowMapper(), jobName);
+    }
 
     @Override
     public void afterPropertiesSet() {
