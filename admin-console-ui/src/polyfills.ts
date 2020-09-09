@@ -65,9 +65,3 @@ import 'zone.js/dist/zone'; // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
-declare module "@angular/core" {
-  interface ModuleWithProviders<T = any> {
-    ngModule: Type<T>;
-    providers?: Provider[];
-  }
-}
