@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ExtraOptions, RouterModule, Routes} from '@angular/router';
-import {DashboardComponent} from './dashboard/dashboard.component';
-import {AppComponent} from './app.component';
-import {AnalyticsComponent} from './analytics/analytics.component';
-import {HomeComponent} from './home/home.component';
+import {AnalyticsComponent} from './components/analytics/analytics.component';
+import {HomeComponent} from './components/home/home.component';
+import {JobsComponent} from './components/jobs/jobs.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'jobs', component: DashboardComponent },
+  { path: 'jobs', component: JobsComponent },
   { path: 'analytics', component: AnalyticsComponent }
 ];
 
