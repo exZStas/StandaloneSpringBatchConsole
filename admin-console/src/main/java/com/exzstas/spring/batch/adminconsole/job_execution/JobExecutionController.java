@@ -1,5 +1,6 @@
 package com.exzstas.spring.batch.adminconsole.job_execution;
 
+import com.exzstas.spring.batch.adminconsole.job_execution.model.JobExecutionLite;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,12 +20,18 @@ public class JobExecutionController {
     private JdbcJobExecutionDaoExtension jdbcJobExecutionDaoExtension;
 
     @GetMapping
-    public ResponseEntity getJobExecutions(
-            @RequestParam("jobName") String jobName
-    ) {
+    public ResponseEntity getJobExecutions(@RequestParam("jobName") String jobName) {
 
         List<JobExecution> jobExecution = jdbcJobExecutionDaoExtension.getJobExecutionsByJobName(jobName);
 
         return new ResponseEntity(jobExecution, HttpStatus.OK);
+    }
+
+    @GetMapping("/lite")
+    public ResponseEntity getJobExecutionsLite() {
+
+        List<JobExecutionLite> jobExecutionsLite = jdbcJobExecutionDaoExtension.getJobExecutionsLite();
+
+        return new ResponseEntity(jobExecutionsLite, HttpStatus.OK);
     }
 }

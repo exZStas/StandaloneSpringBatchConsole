@@ -1,5 +1,6 @@
 package com.exzstas.spring.batch.adminconsole.job_execution;
 
+import com.exzstas.spring.batch.adminconsole.job_execution.model.JobExecutionLite;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.ExitStatus;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -21,15 +23,25 @@ public class JdbcJobExecutionDaoExtension extends JdbcJobExecutionDao {
 
     private JdbcOperations jdbcTemplate;
 
-    private static final String GET_EXECUTIONS = "SELECT JOB_EXECUTION_ID, START_TIME, END_TIME, STATUS, EXIT_CODE," +
+    private static final String GET_JOB_EXECUTIONS = "SELECT JOB_EXECUTION_ID, START_TIME, END_TIME, STATUS, EXIT_CODE," +
             " EXIT_MESSAGE, CREATE_TIME, LAST_UPDATED, %PREFIX%JOB_EXECUTION.VERSION, JOB_CONFIGURATION_LOCATION" +
             " from %PREFIX%JOB_EXECUTION" +
             " join batch_job_instance on %PREFIX%JOB_EXECUTION.job_instance_id = batch_job_instance.job_instance_id " +
             " where batch_job_instance.job_name = ?";
 
+    private static final String GET_JOB_EXECUTIONS_LITE = "SELECT JOB_EXECUTION_ID, JOB_NAME, START_TIME, END_TIME, EXIT_CODE " +
+            "from BATCH_JOB_EXECUTION " +
+            "join batch_job_instance on BATCH_JOB_EXECUTION.job_instance_id = batch_job_instance.job_instance_id";
+
+
     public List<JobExecution> getJobExecutionsByJobName(String jobName) {
-        return jdbcTemplate.query(getQuery(GET_EXECUTIONS),
+        return jdbcTemplate.query(getQuery(GET_JOB_EXECUTIONS),
                 new JobExecutionRowMapper(), jobName);
+    }
+
+    public List<JobExecutionLite> getJobExecutionsLite() {
+        return jdbcTemplate.query(getQuery(GET_JOB_EXECUTIONS_LITE),
+                new JobExecutionLiteRowMapper());
     }
 
     @Override
@@ -68,6 +80,23 @@ public class JdbcJobExecutionDaoExtension extends JdbcJobExecutionDao {
             jobExecution.setLastUpdated(rs.getTimestamp(8));
             jobExecution.setVersion(rs.getInt(9));
             return jobExecution;
+        }
+
+    }
+
+    private final class JobExecutionLiteRowMapper implements RowMapper<JobExecutionLite> {
+
+        public JobExecutionLiteRowMapper() {}
+
+        @Override
+        public JobExecutionLite mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Long id = rs.getLong(1);
+            String jobName = rs.getString(2);
+            Date startDate = rs.getDate(3);
+            Date endDate = rs.getDate(4);
+            String exitCode = rs.getString(5);
+
+            return new JobExecutionLite(id, jobName, startDate, endDate, exitCode);
         }
 
     }
