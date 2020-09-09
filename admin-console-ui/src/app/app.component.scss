@@ -1,0 +1,48 @@
+.menu {
+  .item {
+    width: 100%;
+    cursor: pointer;
+    outline: 0;
+    padding-bottom: 5px;
+
+    .item-body {
+      padding: 5px 20px;
+      box-sizing: border-box;
+      display: -webkit-box;
+      display: flex;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+      flex-direction: row;
+      -webkit-box-pack: start;
+      justify-content: flex-start;
+      -webkit-box-align: center;
+      align-items: center;
+      align-content: center;
+      color: white;
+
+      .icon {
+        margin-right: 20px;
+      }
+    }
+  }
+}
+
+.nav-pills li a {
+  color: white;
+  padding: 20px;
+  font-size: 20px;
+}
+
+.nav-header {
+  color: white;
+  font-size: 25px;
+  padding: 10px 0 0 10px;
+}
+
+.nav-link.active {
+  background-color: transparent;
+  color: #FFA500 !important;
+  line-height: 1;
+}
+
+

@@ -24,7 +24,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "node_modules/bootstrap/scss/bootstrap.scss",
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -88,7 +89,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           }
@@ -124,5 +125,10 @@
   "defaultProject": "admin-console-ui",
   "cli": {
     "analytics": "5809d7d1-8148-4cdd-be7e-b422c840ac7a"
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
   }
 }
