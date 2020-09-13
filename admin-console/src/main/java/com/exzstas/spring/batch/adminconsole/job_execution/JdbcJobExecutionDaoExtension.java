@@ -23,15 +23,20 @@ public class JdbcJobExecutionDaoExtension extends JdbcJobExecutionDao {
 
     private JdbcOperations jdbcTemplate;
 
-    private static final String GET_JOB_EXECUTIONS = "SELECT JOB_EXECUTION_ID, START_TIME, END_TIME, STATUS, EXIT_CODE," +
-            " EXIT_MESSAGE, CREATE_TIME, LAST_UPDATED, %PREFIX%JOB_EXECUTION.VERSION, JOB_CONFIGURATION_LOCATION" +
-            " from %PREFIX%JOB_EXECUTION" +
-            " join batch_job_instance on %PREFIX%JOB_EXECUTION.job_instance_id = batch_job_instance.job_instance_id " +
-            " where batch_job_instance.job_name = ?";
+    private static final String GET_JOB_EXECUTIONS = """
+             SELECT JOB_EXECUTION_ID, START_TIME, END_TIME, STATUS, EXIT_CODE,
+             EXIT_MESSAGE, CREATE_TIME, LAST_UPDATED, %PREFIX%JOB_EXECUTION.VERSION, JOB_CONFIGURATION_LOCATION
+             from %PREFIX%JOB_EXECUTION
+             join batch_job_instance on %PREFIX%JOB_EXECUTION.job_instance_id = batch_job_instance.job_instance_id 
+             where batch_job_instance.job_name = ?
+             """;
 
-    private static final String GET_JOB_EXECUTIONS_LITE = "SELECT JOB_EXECUTION_ID, JOB_NAME, START_TIME, END_TIME, EXIT_CODE " +
-            "from BATCH_JOB_EXECUTION " +
-            "join batch_job_instance on BATCH_JOB_EXECUTION.job_instance_id = batch_job_instance.job_instance_id";
+    private static final String GET_JOB_EXECUTIONS_LITE = """
+            SELECT JOB_EXECUTION_ID, JOB_NAME, START_TIME, END_TIME, EXIT_CODE 
+            from BATCH_JOB_EXECUTION 
+            join batch_job_instance on BATCH_JOB_EXECUTION.job_instance_id = batch_job_instance.job_instance_id 
+            offset ? rows fetch next ? rows only
+            """;
 
 
     public List<JobExecution> getJobExecutionsByJobName(String jobName) {
@@ -39,9 +44,9 @@ public class JdbcJobExecutionDaoExtension extends JdbcJobExecutionDao {
                 new JobExecutionRowMapper(), jobName);
     }
 
-    public List<JobExecutionLite> getJobExecutionsLite() {
+    public List<JobExecutionLite> getJobExecutionsLite(int startRow, int maxRow) {
         return jdbcTemplate.query(getQuery(GET_JOB_EXECUTIONS_LITE),
-                new JobExecutionLiteRowMapper());
+                new JobExecutionLiteRowMapper(), startRow, maxRow);
     }
 
     @Override

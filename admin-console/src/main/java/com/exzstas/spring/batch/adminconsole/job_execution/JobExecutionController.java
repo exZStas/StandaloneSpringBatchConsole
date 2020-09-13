@@ -28,9 +28,10 @@ public class JobExecutionController {
     }
 
     @GetMapping("/lite")
-    public ResponseEntity getJobExecutionsLite() {
+    public ResponseEntity getJobExecutionsLite(@RequestParam(value = "startRow") int startRow,
+                                               @RequestParam(value = "maxRows") int maxRow) {
 
-        List<JobExecutionLite> jobExecutionsLite = jdbcJobExecutionDaoExtension.getJobExecutionsLite();
+        List<JobExecutionLite> jobExecutionsLite = jdbcJobExecutionDaoExtension.getJobExecutionsLite(startRow, maxRow);
 
         return new ResponseEntity(jobExecutionsLite, HttpStatus.OK);
     }
