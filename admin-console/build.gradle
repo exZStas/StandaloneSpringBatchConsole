@@ -32,8 +32,9 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: '2.3.3.RELEASE', ext: 'pom'
 
     compileOnly 'org.projectlombok:lombok'
-    // https://mvnrepository.com/artifact/com.oracle/ojdbc7
-    compile group: 'com.oracle', name: 'driver', version: '12.1.0.2'
+
+    // https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc10
+    compile group: 'com.oracle.database.jdbc', name: 'ojdbc10', version: '19.7.0.0'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
