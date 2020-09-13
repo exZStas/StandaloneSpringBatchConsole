@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {JobsService} from '../../services/jobs.service';
+import {JobExecution} from '../../model/job-execution';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-jobs',
@@ -7,7 +11,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JobsComponent implements OnInit {
 
-  constructor() { }
+  jobExecutions: Observable<JobExecution[]> = this.jobsService.getJobExportsLite(1,2)
+
+  constructor(private  jobsService: JobsService) { }
 
   ngOnInit(): void {
   }

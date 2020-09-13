@@ -1,1 +1,5 @@
-<p>jobs works!</p>
+<ul>
+  <li *ngFor="let job of jobExecutions | async">
+    Job id:{{job.executionId}} job name: {{job.jobName}}
+  </li>
+</ul>

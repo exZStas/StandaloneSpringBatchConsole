@@ -11,6 +11,7 @@ import {SidenavModule} from 'angular-ng-sidenav';
 import { AnalyticsComponent } from './components/analytics/analytics.component';
 import { HomeComponent } from './components/home/home.component';
 import {JobsComponent} from './components/jobs/jobs.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {JobsComponent} from './components/jobs/jobs.component';
     RouterModule,
     BrowserAnimationsModule,
     NgbModule,
-    SidenavModule
+    SidenavModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
