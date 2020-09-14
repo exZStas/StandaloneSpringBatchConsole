@@ -26,10 +26,16 @@
   </div>
 
   <div class="d-flex justify-content-between p-2">
-    <ngb-pagination [collectionSize]="(jobExecutions | async).length" [(page)]="startRow" [pageSize]="maxRows" (pageChange)="refreshJobExecutions(startRow, maxRows)">
+    <ngb-pagination [collectionSize]="jobExecutionsCounter"
+                    [(page)]="page"
+                    [pageSize]="pageSize"
+                    (pageChange)="refreshJobExecutions(page, pageSize)">
     </ngb-pagination>
 
-    <select class="custom-select" style="width: auto" [(ngModel)]="maxRows" (ngModelChange)="refreshJobExecutions(startRow, maxRows)">
+    <select class="custom-select"
+            style="width: auto"
+            [(ngModel)]="pageSize"
+            (ngModelChange)="refreshJobExecutions(page, pageSize)">
       <option [ngValue]="10">10 items per page</option>
       <option [ngValue]="20">20 items per page</option>
       <option [ngValue]="30">30 items per page</option>

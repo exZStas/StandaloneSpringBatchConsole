@@ -18,7 +18,12 @@ export class JobsService {
       .set('startRow', `${startRow}`)
       .set('maxRows', `${maxRows}`);
 
-    const jobExportsLiteUrl = this.REST_API_SERVER + '/executions/lite';
+    const jobExportsLiteUrl = this.REST_API_SERVER + '/executions/lite'; //todo refactor
     return this.httpClient.get<JobExecution[]>(jobExportsLiteUrl, {params});
+  }
+
+  public getJobExportsCount(): Observable<Number> {
+    const jobExportsLiteUrl = this.REST_API_SERVER + '/executions/count'; //todo refactor
+    return this.httpClient.get<Number>(jobExportsLiteUrl);
   }
 }

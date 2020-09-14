@@ -24,7 +24,7 @@ public class JdbcJobExecutionDaoExtension extends JdbcJobExecutionDao {
     private JdbcOperations jdbcTemplate;
 
     private static final String GET_JOB_EXECUTIONS = """
-             SELECT JOB_EXECUTION_ID, START_TIME, END_TIME, STATUS, EXIT_CODE,
+             select JOB_EXECUTION_ID, START_TIME, END_TIME, STATUS, EXIT_CODE,
              EXIT_MESSAGE, CREATE_TIME, LAST_UPDATED, %PREFIX%JOB_EXECUTION.VERSION, JOB_CONFIGURATION_LOCATION
              from %PREFIX%JOB_EXECUTION
              join batch_job_instance on %PREFIX%JOB_EXECUTION.job_instance_id = batch_job_instance.job_instance_id 
@@ -32,10 +32,15 @@ public class JdbcJobExecutionDaoExtension extends JdbcJobExecutionDao {
              """;
 
     private static final String GET_JOB_EXECUTIONS_LITE = """
-            SELECT JOB_EXECUTION_ID, JOB_NAME, START_TIME, END_TIME, EXIT_CODE 
+            select JOB_EXECUTION_ID, JOB_NAME, START_TIME, END_TIME, EXIT_CODE 
             from BATCH_JOB_EXECUTION 
-            join batch_job_instance on BATCH_JOB_EXECUTION.job_instance_id = batch_job_instance.job_instance_id 
+            join batch_job_instance on BATCH_JOB_EXECUTION.job_instance_id = batch_job_instance.job_instance_id
+            order by JOB_EXECUTION_ID desc
             offset ? rows fetch next ? rows only
+            """;
+
+    private static final String GET_JOB_EXECUTIONS_COUNT = """
+            select count(*) from BATCH_JOB_EXECUTION
             """;
 
 
@@ -47,6 +52,10 @@ public class JdbcJobExecutionDaoExtension extends JdbcJobExecutionDao {
     public List<JobExecutionLite> getJobExecutionsLite(int startRow, int maxRow) {
         return jdbcTemplate.query(getQuery(GET_JOB_EXECUTIONS_LITE),
                 new JobExecutionLiteRowMapper(), startRow, maxRow);
+    }
+
+    public Long getJobExecutionsCount() {
+        return jdbcTemplate.queryForObject(getQuery(GET_JOB_EXECUTIONS_COUNT), Long.class);
     }
 
     @Override

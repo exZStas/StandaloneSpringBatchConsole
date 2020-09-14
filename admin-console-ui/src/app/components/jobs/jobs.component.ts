@@ -10,19 +10,30 @@ import {Observable} from 'rxjs';
 })
 export class JobsComponent implements OnInit {
 
-  startRow = 1;
-  maxRows = 10;
+  page = 1
+  pageSize = 10
+  startRow = 1
+  jobExecutionsCounter
 
   jobExecutions: Observable<JobExecution[]>
 
   constructor(private  jobsService: JobsService) {
-    this.refreshJobExecutions(this.startRow, this.maxRows)
+    this.refreshJobExecutions(this.startRow, this.pageSize)
+    this.jobsService.getJobExportsCount().subscribe(next => {
+      this.jobExecutionsCounter = next
+    })
   }
 
   ngOnInit(): void {
   }
 
-  refreshJobExecutions(startRow: number, maxRows: number) {
-    this.jobExecutions = this.jobsService.getJobExportsLite(startRow,maxRows)
+  refreshJobExecutions(page: number, pageSize: number) {
+    if(page == 1) {
+      this.startRow = 1
+    } else {
+      this.startRow = page * pageSize
+    }
+
+    this.jobExecutions = this.jobsService.getJobExportsLite(this.startRow, pageSize)
   }
 }

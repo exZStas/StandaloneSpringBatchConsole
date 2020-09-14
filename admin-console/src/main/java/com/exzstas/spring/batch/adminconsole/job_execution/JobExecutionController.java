@@ -32,4 +32,12 @@ public class JobExecutionController {
 
         return new ResponseEntity(jobExecutionsLite, HttpStatus.OK);
     }
+
+    @GetMapping("/count")
+    public ResponseEntity getJobExecutionsLiteCount() {
+
+        Long jobExecutionsCount = jdbcJobExecutionDaoExtension.getJobExecutionsCount();
+
+        return new ResponseEntity(jobExecutionsCount, HttpStatus.OK);
+    }
 }
