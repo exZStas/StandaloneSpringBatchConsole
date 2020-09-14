@@ -12,6 +12,7 @@ import { AnalyticsComponent } from './components/analytics/analytics.component';
 import { HomeComponent } from './components/home/home.component';
 import {JobsComponent} from './components/jobs/jobs.component';
 import {HttpClientModule} from '@angular/common/http';
+import {FormsModule, NgForm} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {HttpClientModule} from '@angular/common/http';
     BrowserAnimationsModule,
     NgbModule,
     SidenavModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

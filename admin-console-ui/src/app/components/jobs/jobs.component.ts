@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {JobsService} from '../../services/jobs.service';
 import {JobExecution} from '../../model/job-execution';
-import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -11,11 +10,19 @@ import {Observable} from 'rxjs';
 })
 export class JobsComponent implements OnInit {
 
-  jobExecutions: Observable<JobExecution[]> = this.jobsService.getJobExportsLite(1,2)
+  startRow = 1;
+  maxRows = 10;
 
-  constructor(private  jobsService: JobsService) { }
+  jobExecutions: Observable<JobExecution[]>
+
+  constructor(private  jobsService: JobsService) {
+    this.refreshJobExecutions(this.startRow, this.maxRows)
+  }
 
   ngOnInit(): void {
   }
 
+  refreshJobExecutions(startRow: number, maxRows: number) {
+    this.jobExecutions = this.jobsService.getJobExportsLite(startRow,maxRows)
+  }
 }
