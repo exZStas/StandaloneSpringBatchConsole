@@ -31,6 +31,12 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: '2.3.3.RELEASE', ext: 'pom'
 
+    // https://mvnrepository.com/artifact/org.mapstruct/mapstruct
+    compile group: 'org.mapstruct', name: 'mapstruct', version: '1.4.0.Final'
+
+    // https://mvnrepository.com/artifact/org.mapstruct/mapstruct-processor
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.0.Final'
+
     compileOnly 'org.projectlombok:lombok'
 
     // https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc10

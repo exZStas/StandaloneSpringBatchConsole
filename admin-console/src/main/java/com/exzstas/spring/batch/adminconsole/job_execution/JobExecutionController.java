@@ -1,5 +1,7 @@
 package com.exzstas.spring.batch.adminconsole.job_execution;
 
+import com.exzstas.spring.batch.adminconsole.job_execution.dto.JobExecutionLiteDto;
+import com.exzstas.spring.batch.adminconsole.job_execution.dto.JobExecutionMapper;
 import com.exzstas.spring.batch.adminconsole.job_execution.model.JobExecutionLite;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ public class JobExecutionController {
     @Autowired
     private JdbcJobExecutionDaoExtension jdbcJobExecutionDaoExtension;
 
+    @Autowired
+    private JobExecutionMapper jobExecutionMapper;
+
     @GetMapping
     public ResponseEntity getJobExecutions(@RequestParam("jobName") String jobName) {
 
@@ -25,12 +30,13 @@ public class JobExecutionController {
     }
 
     @GetMapping("/lite")
-    public ResponseEntity getJobExecutionsLite(@RequestParam(value = "startRow") int startRow,
+    public ResponseEntity<List<JobExecutionLiteDto>> getJobExecutionsLite(@RequestParam(value = "startRow") int startRow,
                                                @RequestParam(value = "maxRows") int maxRow) {
 
         List<JobExecutionLite> jobExecutionsLite = jdbcJobExecutionDaoExtension.getJobExecutionsLite(startRow, maxRow);
+        List<JobExecutionLiteDto> jobExecutionLiteDtos = jobExecutionMapper.entitiesToDto(jobExecutionsLite);
 
-        return new ResponseEntity(jobExecutionsLite, HttpStatus.OK);
+        return new ResponseEntity<>(jobExecutionLiteDtos, HttpStatus.OK);
     }
 
     @GetMapping("/count")

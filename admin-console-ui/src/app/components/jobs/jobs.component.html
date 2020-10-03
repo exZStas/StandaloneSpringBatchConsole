@@ -17,8 +17,8 @@
       <tr *ngFor="let jobExecution of jobExecutions | async">
         <th scope="row">{{jobExecution.executionId}}</th>
         <td>{{jobExecution.jobName}}</td>
-        <td>{{jobExecution.startDate}}</td>
-        <td>{{jobExecution.endDate}}</td>
+        <td>{{jobExecution.startDate | date:'medium'}}</td>
+        <td>{{jobExecution.endDate | date:'medium'}}</td>
         <td>{{jobExecution.exitCode}}</td>
       </tr>
       </tbody>
