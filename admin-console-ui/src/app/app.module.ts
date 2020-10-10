@@ -13,13 +13,15 @@ import { HomeComponent } from './components/home/home.component';
 import {JobsComponent} from './components/jobs/jobs.component';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, NgForm} from '@angular/forms';
+import { JobDetailsComponent } from './components/job-details/job-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     JobsComponent,
     AnalyticsComponent,
-    HomeComponent
+    HomeComponent,
+    JobDetailsComponent
   ],
   imports: [
     BrowserModule,
