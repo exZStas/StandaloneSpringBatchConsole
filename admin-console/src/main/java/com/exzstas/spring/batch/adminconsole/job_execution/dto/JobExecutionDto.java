@@ -13,6 +13,7 @@ public class JobExecutionDto {
     private String status;
     private String exitCode;
     private String exitMessage;
+    private String jobName;
     private Date createDate;
     private Date lastUpdated;
 }
