@@ -2,7 +2,6 @@ package com.exzstas.spring.batch.adminconsole.job_execution.dto;
 
 import lombok.Data;
 
-import java.util.Date;
 
 @Data
 public class JobExecutionLiteDto {
