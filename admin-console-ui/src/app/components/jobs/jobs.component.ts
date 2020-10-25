@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {JobsService} from '../../services/jobs.service';
-import {JobExecution} from '../../model/job-execution';
+import {JobExecutionsService} from '../../services/jobs-executions.service';
+import {JobExecutionLite} from '../../model/job-execution-lite';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -15,11 +15,11 @@ export class JobsComponent implements OnInit {
   startRow = 1
   jobExecutionsCounter
 
-  jobExecutions: Observable<JobExecution[]>
+  jobExecutions: Observable<JobExecutionLite[]>
 
-  constructor(private  jobsService: JobsService) {
+  constructor(private jobExecutionsService: JobExecutionsService) {
     this.refreshJobExecutions(this.startRow, this.pageSize)
-    this.jobsService.getJobExportsCount().subscribe(next => {
+    this.jobExecutionsService.getJobExecutionsCount().subscribe(next => {
       this.jobExecutionsCounter = next
     })
   }
@@ -34,6 +34,6 @@ export class JobsComponent implements OnInit {
       this.startRow = page * pageSize
     }
 
-    this.jobExecutions = this.jobsService.getJobExportsLite(this.startRow, pageSize)
+    this.jobExecutions = this.jobExecutionsService.getJobExecutionsLite(this.startRow, pageSize)
   }
 }

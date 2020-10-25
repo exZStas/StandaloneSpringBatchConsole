@@ -4,4 +4,8 @@ export interface JobExecution {
   startDate: Date;
   endDate: Date;
   exitCode: string;
+  exitMessage: string;
+  status: string;
+  createDate: Date;
+  lastUpdated: Date;
 }

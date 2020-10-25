@@ -19,7 +19,12 @@
         <td><a [routerLink]="['/jobs', jobExecution.executionId]">{{jobExecution.jobName}}</a></td>
         <td>{{jobExecution.startDate | date:'medium'}}</td>
         <td>{{jobExecution.endDate | date:'medium'}}</td>
-        <td>{{jobExecution.exitCode}}</td>
+        <td class="badge" [ngClass]="{
+              'badge-success': jobExecution.exitCode === 'COMPLETED',
+              'badge-danger': (jobExecution.exitCode === 'FAILED' || jobExecution.exitCode === 'ABANDONED'),
+              'badge-primary': (jobExecution.exitCode === 'STARTED' || jobExecution.exitCode === 'STARTING' || jobExecution.exitCode === 'STOPPED' || jobExecution.exitCode === 'STOPPING'),
+              'badge-warning': jobExecution.exitCode === 'UNKNOWN'
+          }">{{jobExecution.exitCode}}</td>
       </tr>
       </tbody>
     </table>

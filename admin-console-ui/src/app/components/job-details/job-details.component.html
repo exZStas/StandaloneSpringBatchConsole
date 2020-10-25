@@ -1,1 +1,169 @@
-<p>job-details works!</p>
+<div class="card">
+  <div class="card-header">
+    <h3>
+      <span routerLink="/jobs" class="material-icons arrow-back" >arrow_back_ios</span>
+      Job execution Details - Execution ID: {{ jobExecution?.executionId }}
+    </h3>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="float-left">
+          <h5>Property</h5>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="float-left">
+          <h5>Value</h5>
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="float-left">
+          <span class="property">Execution id</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="float-left">
+          <span>{{ jobExecution?.executionId }}</span>
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="float-left">
+          <span class="property">Job name</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="float-left">
+          <span>{{ jobExecution?.jobName }}</span>
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="float-left">
+          <span class="property">Create date</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="float-left">
+          <span>{{ jobExecution?.createDate }}</span>
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="float-left">
+          <span class="property">Last updated</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="float-left">
+          <span>{{ jobExecution?.lastUpdated }}</span>
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="float-left">
+          <span class="property">Start date</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="float-left">
+          <span>{{ jobExecution?.startDate }}</span>
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="float-left">
+          <span class="property">End date</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="float-left">
+          <span>{{ jobExecution?.endDate }}</span>
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="float-left">
+          <span class="property">Status</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="float-left">
+          <span class="badge" [ngClass]="{
+              'badge-success': jobExecution?.status === 'COMPLETED',
+              'badge-danger': jobExecution?.status === 'FAILED',
+              'badge-primary': (jobExecution?.status === 'EXECUTING' || jobExecution?.status === 'NOOP' || jobExecution?.status === 'STOPPED'),
+              'badge-warning': jobExecution?.status === 'UNKNOWN'
+          }">{{ jobExecution?.status }}</span>
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="float-left">
+          <span class="property">Exit code</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="float-left">
+          <span class="badge" [ngClass]="{
+              'badge-success': jobExecution?.exitCode === 'COMPLETED',
+              'badge-danger': (jobExecution?.exitCode === 'FAILED' || jobExecution?.exitCode === 'ABANDONED'),
+              'badge-primary': (jobExecution?.exitCode === 'STARTED' || jobExecution?.exitCode === 'STARTING' || jobExecution?.exitCode === 'STOPPED' || jobExecution?.exitCode === 'STOPPING'),
+              'badge-warning': jobExecution?.exitCode === 'UNKNOWN'
+          }">{{ jobExecution?.exitCode }}</span>
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="float-left">
+          <span class="property">Exit message</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="float-left">
+            <span *ngIf="!jobExecution?.exitMessage">No exit message available</span>
+            <span *ngIf="jobExecution?.exitMessage">{{ jobExecution?.exitMessage }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

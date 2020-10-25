@@ -1,0 +1,12 @@
+hr {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.property {
+  font-weight: bold;
+}
+
+.arrow-back:hover {
+  cursor: pointer;
+}
